@@ -10,20 +10,20 @@ from keyboards.audio_gid import create_mian_audio_gid_msg_kb, create_attraction_
 router: Router = Router(name='audioGidRouter')
 
 
-@router.callback_query(F.data == 'send_audio_gid_msg')
-async def process_start_audio_gid_btn(callback: CallbackQuery) -> None:
-    '''
-    Хендрел нажатия на кнопку показа стартового сообщения уадио-экскурсии
-    '''
+# @router.callback_query(F.data == 'send_audio_gid_msg')
+# async def process_start_audio_gid_btn(callback: CallbackQuery) -> None:
+#     '''
+#     Хендрел нажатия на кнопку показа стартового сообщения уадио-экскурсии
+#     '''
 
-    photo = InputMediaPhoto(media=FSInputFile('assets/img/start_audio_gid.jpg'))
+#     photo = InputMediaPhoto(media=FSInputFile('assets/img/start_audio_gid.jpg'))
 
-    await bot.edit_message_media(chat_id=callback.message.chat.id,
-                                 message_id=callback.message.message_id,
-                                 media=photo,
-                                 reply_markup=create_mian_audio_gid_msg_kb())
+#     await bot.edit_message_media(chat_id=callback.message.chat.id,
+#                                  message_id=callback.message.message_id,
+#                                  media=photo,
+#                                  reply_markup=create_mian_audio_gid_msg_kb())
 
-    return None
+#     return None
 
 
 @router.callback_query(F.data == 'start_audio_gid')
