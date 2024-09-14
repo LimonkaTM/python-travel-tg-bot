@@ -1,8 +1,6 @@
 from aiogram import F
 from aiogram.dispatcher.router import Router
-from aiogram.types import CallbackQuery, FSInputFile, InputMediaPhoto, InputMediaAudio
-
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile
 
 from loader import bot
 from keyboards.audio_gid import create_mian_audio_gid_msg_kb
