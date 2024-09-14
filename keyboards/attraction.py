@@ -3,7 +3,7 @@ from aiogram.types.inline_keyboard_button import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-def photo_navigation_kb() -> InlineKeyboardMarkup:
+def photo_navigation_kb(current_index: int) -> InlineKeyboardMarkup:
 
     '''
     Создаёт клавиатуру "карусель" для просмотра множества фотографий через
@@ -14,10 +14,10 @@ def photo_navigation_kb() -> InlineKeyboardMarkup:
 
     keyboard_builder.row(
         InlineKeyboardButton(text='<<',
-                             callback_data='prev_attraction_photo'
+                             callback_data=f'prev_attraction_photo:{current_index}'
                              ),
         InlineKeyboardButton(text='>>',
-                             callback_data='next_attraction_photo'
+                             callback_data=f'next_attraction_photo:{current_index}'
                              )
     )
 

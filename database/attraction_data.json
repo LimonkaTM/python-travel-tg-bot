@@ -1,0 +1,19 @@
+{
+    "Rezitsky_square":{
+        "title":"Сквер имени Резитского В. П.",
+        "description":"Что-то про этот сквер, очень коротко",
+        "photo_paths":[
+            "assets/img/Rezitsky_square.jpg",
+            "assets/img/Rezitsky_square_map.jpg"
+        ],
+        "audio_path": "assets/audio/Rezitsky_square.mp3"
+    },
+    "File_some":{
+        "title":"Xnj-nj",
+        "description":"Что-то про этот сквер, очень коротко",
+        "photo_paths":[
+            "assets/img/some_photo.jpg"
+        ],
+        "audio_path": "assets/audio/lame.mp3"
+    }
+}
