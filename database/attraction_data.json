@@ -13,7 +13,8 @@
             "title":"Xnj-nj",
             "description":"Что-то про этот сквер, очень коротко",
             "photo_paths":[
-                "assets/img/some_photo.jpg"
+                "assets/img/travel_around_Arkhangelsk.jpg",
+                "assets/img/Rezitsky_square_map.jpg"
             ],
             "audio_path": "assets/audio/lame.mp3"
         }

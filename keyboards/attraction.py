@@ -14,10 +14,10 @@ def photo_navigation_kb(currnet_attraction_index: int, current_photo_index: int)
 
     keyboard_builder.row(
         InlineKeyboardButton(text='<<',
-                             callback_data=f'prev_attraction_photo:{current_photo_index}'
+                             callback_data=f'prev_attraction_photo:{currnet_attraction_index}:{current_photo_index}'
                              ),
         InlineKeyboardButton(text='>>',
-                             callback_data=f'next_attraction_photo:{current_photo_index}'
+                             callback_data=f'next_attraction_photo:{currnet_attraction_index}:{current_photo_index}'
                              )
     )
 
