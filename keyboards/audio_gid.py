@@ -18,7 +18,7 @@ def create_mian_audio_gid_msg_kb() -> InlineKeyboardMarkup:
         callback_data='send_list_attraction_msg')
     keyboard_builder.button(
         text='Назад',
-        callback_data='back_to_main_msg')
+        callback_data='send_main_msg')
 
     keyboard_builder.adjust(1)
 

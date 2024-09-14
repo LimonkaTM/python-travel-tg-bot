@@ -34,7 +34,7 @@ async def process_start_cmd(callback: CallbackQuery) -> None:
 @router.callback_query(F.data.startswith('prev_audio_gid_attraction') | F.data.startswith('next_audio_gid_attraction'))
 async def process_carousel_btns(callback: CallbackQuery) -> None:
     '''
-    Смена аудио-сообщения аудио-гида
+    Смена аудио-сообщения гида
     '''
     current_attraction_index = int(callback.data.split(':')[1])
 
