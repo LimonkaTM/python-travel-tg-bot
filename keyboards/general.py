@@ -12,19 +12,19 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
 
     keyboard_builder.button(
         text='🚶‍♂️ Начать путешествие 🚶‍♂️',
-        callback_data='send_tour_msg')
+        callback_data='send_about_tour_msg')
     keyboard_builder.button(
         text='🗺️ Обзор достопримечательностей 🗺️',
-        callback_data='send_support_msg')
+        callback_data='send_attraction_msg')
     keyboard_builder.button(
         text='🎧 Аудио-гид 🎧',
-        callback_data='send_about_us_msg')
+        callback_data='send_audio_gid_msg')
     keyboard_builder.button(
         text='🎮 Интерактивные игры 🎮',
-        callback_data='send_about_us_msg')
+        callback_data='send_game_msg')
     keyboard_builder.button(
         text='📝 Обратная связь 📝',
-        callback_data='send_support_msg')
+        callback_data='send_feedback_msg')
     keyboard_builder.button(
         text='❓ Помощь ❓',
         callback_data='send_support_msg')
