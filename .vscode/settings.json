@@ -1,0 +1,9 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.tabSize": 4,
+    "editor.cursorStyle": "underline",
+    "editor.wordWrap": "on",
+    "workbench.iconTheme": "vscode-icons",
+    "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
+    "explorer.confirmDelete": false
+}
