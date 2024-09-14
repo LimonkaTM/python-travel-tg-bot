@@ -7,7 +7,7 @@
                 "assets/img/Rezitsky_square.jpg",
                 "assets/img/Rezitsky_square_map.jpg"
             ],
-            "audio_path": "assets/audio/Rezitsky_square.mp3"
+            "audio_path": "assets/audio/123.mp3"
         },
         {
             "title":"Xnj-nj",
@@ -16,7 +16,7 @@
                 "assets/img/travel_around_Arkhangelsk.jpg",
                 "assets/img/Rezitsky_square_map.jpg"
             ],
-            "audio_path": "assets/audio/lame.mp3"
+            "audio_path": "assets/audio/456.mp3"
         }
     ]
 }
