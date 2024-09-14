@@ -1,10 +1,10 @@
 from aiogram import F
 from aiogram.dispatcher.router import Router
-from aiogram.types import CallbackQuery, FSInputFile, InputMediaPhoto
+from aiogram.types import CallbackQuery, FSInputFile, InputMediaPhoto, InputMediaAudio
 
 from loader import bot, attraction_data
 
-from keyboards.audio_gid import create_mian_audio_gid_msg_kb
+from keyboards.audio_gid import create_mian_audio_gid_msg_kb, create_attraction_audio_gid_kb
 
 
 router: Router = Router(name='audioGidRouter')
@@ -13,8 +13,9 @@ router: Router = Router(name='audioGidRouter')
 @router.callback_query(F.data == 'send_audio_gid_msg')
 async def process_start_audio_gid_btn(callback: CallbackQuery) -> None:
     '''
-    Хендрел нажатия на кнопку начала уадио-экскурсии
+    Хендрел нажатия на кнопку показа стартового сообщения уадио-экскурсии
     '''
+
     photo = InputMediaPhoto(media=FSInputFile('assets/img/start_audio_gid.jpg'))
 
     await bot.edit_message_media(chat_id=callback.message.chat.id,
@@ -25,22 +26,25 @@ async def process_start_audio_gid_btn(callback: CallbackQuery) -> None:
     return None
 
 
-# @router.callback_query(F.data == 'start_audio_gid')
-# async def process_start_cmd(callback: CallbackQuery) -> None:
-#     '''
-#     Хендрел нажатия на кнопку с начала уадио-экскурсии
-#     '''
+@router.callback_query(F.data == 'start_audio_gid')
+async def process_start_cmd(callback: CallbackQuery) -> None:
+    '''
+    Хендрел нажатия на кнопку начала уадио-экскурсии
+    '''
 
-#     await callback.answer()
+    print(attraction_data[0]['audio_path'])
 
-#     audio = FSInputFile(path=attraction_data[0]['audio_path'])
+    await bot.delete_message(chat_id=callback.message.chat.id,
+                             message_id=callback.message.message_id)
 
-#     await bot.send_audio(chat_id=callback.message.chat.id,
-#                          photo=audio,
-#                          caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["description"]}',
-#                          reply_markup=photo_navigation_kb(currnet_attraction_index=0, current_photo_index=0))
+    audio = FSInputFile(path=attraction_data[0]['audio_path'])
+                            
+    await bot.send_audio(chat_id=callback.message.chat.id,
+                         audio=audio,
+                         caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["audio_gid_description"]}',
+                         reply_markup=create_attraction_audio_gid_kb(0))
 
-#     return None
+    return None
 
 
 # @router.callback_query(F.data.startswith('prev_attraction_photo') | F.data.startswith('next_attraction_photo'))
