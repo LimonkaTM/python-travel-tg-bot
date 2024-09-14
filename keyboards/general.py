@@ -27,7 +27,7 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
         callback_data='send_feedback_msg')
     keyboard_builder.button(
         text='❓ Помощь ❓',
-        callback_data='send_support_msg')
+        callback_data='send_help_msg')
     keyboard_builder.button(
         text='Закрыть',
         callback_data='close_msg')
