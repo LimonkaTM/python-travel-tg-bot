@@ -4,7 +4,7 @@ from aiogram.types import CallbackQuery, FSInputFile, InputMediaPhoto, InputMedi
 
 from loader import bot, attraction_data
 
-from keyboards.audio_gid import create_attraction_audio_gid_kb
+from keyboards.audio_gid import create_attraction_audio_gid_kb, create_list_attraction_kb
 
 
 router: Router = Router(name='audioGidRouter')
@@ -22,7 +22,7 @@ async def process_start_cmd(callback: CallbackQuery) -> None:
                              message_id=callback.message.message_id)
 
     audio = FSInputFile(path=attraction_data[0]['audio_path'])
-                            
+
     await bot.send_audio(chat_id=callback.message.chat.id,
                          audio=audio,
                          caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["audio_gid_description"]}',
@@ -53,5 +53,22 @@ async def process_carousel_btns(callback: CallbackQuery) -> None:
                                  message_id=callback.message.message_id,
                                  media=new_audio,
                                  reply_markup=create_attraction_audio_gid_kb(new_attraction_index))
- 
+
+    return None
+
+
+@router.callback_query(F.data == 'send_list_attraction_msg')
+async def send_list_attractions_msg(callback: CallbackQuery) -> None:
+    '''
+    Отправляет список достопримечательностей для открытия аудио
+    '''
+
+    photo = InputMediaPhoto(media=FSInputFile('assets/img/travel_around_Arkhangelsk.jpg'),
+                            caption='<b>Выберите достопримечательность чтобы послушать аудио-гид:</b>')
+
+    await bot.edit_message_media(chat_id=callback.message.chat.id,
+                                 message_id=callback.message.message_id,
+                                 media=photo,
+                                 reply_markup=create_list_attraction_kb())
+
     return None

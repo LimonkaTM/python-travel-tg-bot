@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 
+from loader import attraction_data
+
 
 def create_mian_audio_gid_msg_kb() -> InlineKeyboardMarkup:
 
@@ -51,5 +53,26 @@ def create_attraction_audio_gid_kb(currnet_audio_gid_index: int) -> InlineKeyboa
             callback_data='send_audio_gid_msg'
         )
     )
+
+    return keyboard_builder.as_markup()
+
+
+def create_list_attraction_kb() -> InlineKeyboardMarkup:
+    '''
+    Создаёт клавиатуру со списком достопримечательностей
+    '''
+
+    keyboard_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
+
+    for index, attraction in enumerate(attraction_data):
+        keyboard_builder.button(
+            text=attraction['title'],
+            callback_data=f'send_audio_gid_msg:{index}')
+
+    keyboard_builder.button(
+        text='Назад',
+        callback_data='send_audio_gid_msg')
+
+    keyboard_builder.adjust(1)
 
     return keyboard_builder.as_markup()
