@@ -72,3 +72,30 @@ async def send_list_attractions_msg(callback: CallbackQuery) -> None:
                                  reply_markup=create_list_attraction_kb())
 
     return None
+
+
+@router.callback_query(F.data.startswith('send_audio_gid_msg'))
+async def send_audio_gid_msg(callback: CallbackQuery) -> None:
+    '''
+    Отправляет аудио-сообщение выбранной достопримечательности
+    '''
+    current_attraction_index = int(callback.data.split(':')[1])
+
+    # if 'prev' in callback.data:
+    #     new_attraction_index = (current_attraction_index - 1) % len(attraction_data)
+    # else:
+    #     new_attraction_index = (current_attraction_index + 1) % len(attraction_data)
+
+    # if new_attraction_index == current_attraction_index:
+    #     return await callback.answer('')
+
+    await callback.message.delete()
+
+    audio = FSInputFile(attraction_data[current_attraction_index]['audio_path'])
+
+    await bot.send_audio(chat_id=callback.message.chat.id,
+                         audio=audio,
+                         caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["description"]}',
+                         reply_markup=create_attraction_audio_gid_kb(current_attraction_index))
+
+    return None
