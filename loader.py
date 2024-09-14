@@ -10,4 +10,4 @@ config: Config = load_config()
 bot: Bot = Bot(token=config.BOT.TOKEN,
                default=DefaultBotProperties(parse_mode='HTML'))
 dp: Dispatcher = Dispatcher()
-attraction_data: dict = get_JSON("./database/attraction_data.json")
+attraction_data: dict = get_JSON(fileName="./database/attraction_data.json", array='attraction')

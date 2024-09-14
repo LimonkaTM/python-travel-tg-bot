@@ -15,7 +15,7 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
         callback_data='send_about_tour_msg')
     keyboard_builder.button(
         text='🗺️ Обзор достопримечательностей 🗺️',
-        callback_data='send_attraction_msg')
+        callback_data='send_attraction_msg:0')
     keyboard_builder.button(
         text='🎧 Аудио-гид 🎧',
         callback_data='send_audio_gid_msg')

@@ -1,7 +1,7 @@
 import json
 
 
-def get_JSON(fileName: str) -> dict:
+def get_JSON(fileName: str, array: str | None) -> dict:
     '''
     Читает JSON из файла
 
@@ -13,4 +13,8 @@ def get_JSON(fileName: str) -> dict:
     '''
 
     with open(fileName, 'r', encoding='utf-8') as file:
-        return json.load(file)
+        if array == 'attraction':
+            data = json.load(file)
+            return data[array]
+        else:
+            return data
