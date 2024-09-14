@@ -10,7 +10,7 @@ from keyboards.attraction import photo_navigation_kb
 router: Router = Router(name='attractionRouter')
 
 
-@router.callback_query(F.data == 'send_attraction_msg')
+@router.callback_query(F.data.startswith('send_attraction_msg'))
 async def process_start_cmd(callback: CallbackQuery) -> None:
     '''
     Хендрел нажатия на кнопку с callback_data == 'send_attraction_msg'
@@ -18,12 +18,13 @@ async def process_start_cmd(callback: CallbackQuery) -> None:
 
     await callback.answer()
 
-    photo = FSInputFile(path=attraction_data[0]['photo_paths'][0])
+    photo = InputMediaPhoto(media=FSInputFile(path=attraction_data[0]['photo_paths'][0]),
+                            caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["description"]}')
 
-    await bot.send_photo(chat_id=callback.message.chat.id,
-                         photo=photo,
-                         caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["description"]}',
-                         reply_markup=photo_navigation_kb(currnet_attraction_index=0, current_photo_index=0))
+    await bot.edit_message_media(chat_id=callback.message.chat.id,
+                                 message_id=callback.message.message_id,
+                                 media=photo,
+                                 reply_markup=photo_navigation_kb(currnet_attraction_index=0, current_photo_index=0))
 
     return None
 
@@ -69,10 +70,11 @@ async def process_switch_attraction(callback: CallbackQuery) -> None:
 
     new_attraction_index = (current_attraction_index + 1)
 
-    all_photo_paths = attraction_data[new_attraction_index]['photo_paths']
+    if new_attraction_index == len(attraction_data):
+        await callback.answer('')
+        return None
 
-    if new_attraction_index == current_attraction_index:
-        return await callback.answer('')
+    all_photo_paths = attraction_data[new_attraction_index]['photo_paths']
 
     new_photo = InputMediaPhoto(media=FSInputFile(all_photo_paths[0]),
                                 caption=f'<b>{attraction_data[new_attraction_index]["title"]}</b>\n\n{attraction_data[new_attraction_index]["description"]}')
@@ -81,3 +83,5 @@ async def process_switch_attraction(callback: CallbackQuery) -> None:
                                  message_id=callback.message.message_id,
                                  media=new_photo,
                                  reply_markup=photo_navigation_kb(new_attraction_index, 0))
+
+    return None
