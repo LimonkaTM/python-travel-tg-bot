@@ -15,11 +15,12 @@ def get_JSON(fileName: str, array: str | None) -> dict:
     '''
 
     with open(fileName, 'r', encoding='utf-8') as file:
-        if array == 'attraction':
-            data = json.load(file)
-            return data[array]
-        elif array == 'game':
-            data = json.load(file)
-            return data[array]
-        else:
-            return data
+        match array:
+            case 'attraction':
+                data = json.load(file)
+                return data[array]
+            case 'game':
+                data = json.load(file)
+                return data[array]
+            case _:
+                return data
