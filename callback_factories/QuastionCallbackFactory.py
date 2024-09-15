@@ -1,5 +1,5 @@
 from aiogram.filters.callback_data import CallbackData
 
 
-class QuestionCallbackFactory(CallbackData, prefix='grade'):
+class QuestionFeedbackCallbackFactory(CallbackData, prefix='grade'):
     grade: str

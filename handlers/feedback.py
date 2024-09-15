@@ -8,7 +8,7 @@ from loader import bot, config
 from keyboards.feedback import create_feedback_kb, create_grade_kb
 from keyboards.general import create_start_msg_kb
 from states.feedbackState import feedbackState
-from callback_factories.QuastionCallbackFactory import QuestionCallbackFactory
+from callback_factories.QuastionCallbackFactory import QuestionFeedbackCallbackFactory
 
 
 router: Router = Router(name='feedbackRouter')
@@ -46,8 +46,8 @@ async def send_feedback_tour(callback: CallbackQuery, state: FSMContext) -> None
     await callback.answer()
 
 
-@router.callback_query(feedbackState.grade_quality_tour, QuestionCallbackFactory.filter())
-async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionCallbackFactory, state: FSMContext) -> None:
+@router.callback_query(feedbackState.grade_quality_tour, QuestionFeedbackCallbackFactory.filter())
+async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionFeedbackCallbackFactory, state: FSMContext) -> None:
     '''
     Функция обработки нажатия на кнопки с ответами на вопрос о качестве тура
     '''
@@ -67,8 +67,8 @@ async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionCall
     return None
 
 
-@router.callback_query(feedbackState.grade_quality_bot, QuestionCallbackFactory.filter())
-async def send_feedback_comment(callback: CallbackQuery, callback_data: QuestionCallbackFactory, state: FSMContext) -> None:
+@router.callback_query(feedbackState.grade_quality_bot, QuestionFeedbackCallbackFactory.filter())
+async def send_feedback_comment(callback: CallbackQuery, callback_data: QuestionFeedbackCallbackFactory, state: FSMContext) -> None:
     '''
     Функция обработки нажатия на кнопки с ответами на вопрос работы с ботом
     '''
