@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from loader import game_data
+
 
 def create_start_game_kb() -> InlineKeyboardMarkup:
     '''
@@ -15,6 +17,39 @@ def create_start_game_kb() -> InlineKeyboardMarkup:
     keyboard_builder.button(
         text='Назад',
         callback_data='send_main_msg')
+
+    keyboard_builder.adjust(1)
+
+    return keyboard_builder.as_markup()
+
+
+async def create_question_kb(question_index: int) -> InlineKeyboardMarkup:
+
+    '''
+    Создаёт клавиатуру сообщения игры
+
+    Args:
+        question_index (int): индекс вопроса в массиве
+
+    Returns:
+        InlineKeyboardMarkup: объект типа InlineKeyboardMarkup
+    '''
+
+    keyboard_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
+
+    question_answers = game_data[question_index]['answeres']
+
+    for question_index, question_answer in enumerate(question_answers):
+        
+        print(question_answer)
+
+        keyboard_builder.button(
+            text=question_answer,
+            callback_data=f'question_answere_index:{question_index}'
+        )
+
+    keyboard_builder.button(text="Выйти",
+                            callback_data="cancel_state")
 
     keyboard_builder.adjust(1)
 
