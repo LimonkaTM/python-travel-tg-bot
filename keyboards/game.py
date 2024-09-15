@@ -23,7 +23,7 @@ def create_start_game_kb() -> InlineKeyboardMarkup:
     return keyboard_builder.as_markup()
 
 
-async def create_question_kb(question_index: int) -> InlineKeyboardMarkup:
+def create_question_kb(question_index: int) -> InlineKeyboardMarkup:
 
     '''
     Создаёт клавиатуру сообщения игры
@@ -37,15 +37,13 @@ async def create_question_kb(question_index: int) -> InlineKeyboardMarkup:
 
     keyboard_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
-    question_answers = game_data[question_index]['answeres']
+    question_answers = game_data[question_index]['answers']
 
-    for question_index, question_answer in enumerate(question_answers):
-        
-        print(question_answer)
+    for question_loop_index, question_answer in enumerate(question_answers):
 
         keyboard_builder.button(
             text=question_answer,
-            callback_data=f'question_answere_index:{question_index}'
+            callback_data=f'question_answere_index:{question_loop_index}'
         )
 
     keyboard_builder.button(text="Выйти",
