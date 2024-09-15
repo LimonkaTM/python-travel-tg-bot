@@ -18,5 +18,8 @@ def get_JSON(fileName: str, array: str | None) -> dict:
         if array == 'attraction':
             data = json.load(file)
             return data[array]
+        elif array == 'game':
+            data = json.load(file)
+            return data[array]
         else:
             return data
