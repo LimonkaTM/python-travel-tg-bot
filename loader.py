@@ -13,4 +13,4 @@ memory_storage: MemoryStorage = MemoryStorage()
 bot: Bot = Bot(token=config.BOT.TOKEN,
                default=DefaultBotProperties(parse_mode='HTML'))
 dp: Dispatcher = Dispatcher(storage=memory_storage)
-attraction_data: dict = get_JSON(fileName="./database/attraction_data.json", array='attraction')
+attraction_data: dict = get_JSON(fileName="./database/data.json", array='attraction')

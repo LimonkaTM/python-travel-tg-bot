@@ -20,5 +20,25 @@
             ],
             "audio_path": "assets/audio/456.mp3"
         }
+    ],
+    "game": [
+        {
+            "question": "Какой-то вопрос",
+            "answeres": [
+                "1",
+                "2",
+                "3"
+            ],
+            "true_answere_index": 2
+        },
+        {
+            "question": "Что-то другое но не вопрос",
+            "answeres": [
+                "1",
+                "2",
+                "3"
+            ],
+            "true_answere_index": 1
+        }
     ]
 }

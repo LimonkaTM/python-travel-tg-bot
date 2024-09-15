@@ -73,7 +73,7 @@ async def cancel_state(callback: CallbackQuery, state: FSMContext) -> None:
     await bot.send_photo(chat_id=callback.message.chat.id,
                          photo=photo,
                          reply_markup=create_start_msg_kb())
-    
+
     await state.clear()
 
     return None
