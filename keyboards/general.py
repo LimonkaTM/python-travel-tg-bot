@@ -11,7 +11,7 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
     keyboard_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     keyboard_builder.button(
-        text='Описание путешествия',
+        text='💫 Описание путешествия 💫',
         callback_data='send_about_tour_msg')
     keyboard_builder.button(
         text='🗺️ Обзор достопримечательностей 🗺️',
@@ -20,7 +20,7 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
         text='🎧 Аудио-гид 🎧',
         callback_data='send_audio_gid_msg')
     keyboard_builder.button(
-        text='🎮 Интерактивные игры 🎮',
+        text='🎮 Викторина 🎮',
         callback_data='send_game_msg')
     keyboard_builder.button(
         text='📝 Обратная связь 📝',
@@ -29,7 +29,7 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
         text='❓ Помощь ❓',
         callback_data='send_help_msg')
     keyboard_builder.button(
-        text='Закрыть',
+        text='✖ Закрыть ✖',
         callback_data='close_msg')
 
     keyboard_builder.adjust(1)
