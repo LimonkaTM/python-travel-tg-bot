@@ -3,12 +3,15 @@ from aiogram.dispatcher.router import Router
 from aiogram.types import CallbackQuery, InputMediaPhoto, FSInputFile
 from aiogram.fsm.context import FSMContext
 
+from callback_factories.QuestionGameCallbackFactory import QuestionGameCallbackFactory
 from states.game_state import gameState
 
 from loader import bot, game_data
 
 from keyboards.game import create_start_game_kb, create_question_kb
+from keyboards.help import create_help_kb
 
+from utils.game import calc_percent_true_answers, define_type_game_result
 
 router: Router = Router(name='gameRouter')
 
@@ -53,50 +56,98 @@ async def send_game_question_msg(callback: CallbackQuery, state: FSMContext) -> 
     return None
 
 
-@router.callback_query(QuestionCallbackFactory.filter())
+@router.callback_query(gameState.question_index, QuestionGameCallbackFactory.filter())
 async def process_question_answere(callback: CallbackQuery,
-                                   callback_data: QuestionCallbackFactory,
+                                   callback_data: QuestionGameCallbackFactory,
                                    state: FSMContext) -> None:
-
     '''
     Функция обработки нажатия на кнопки с ответами на вопрос
     '''
-
-    questions = await memory_storage.get_data(bot=bot, key="questions")
     state_data: dict[str, any] = await state.get_data()
 
-    user_score = state_data["score"]
     question_index = state_data["question_index"]
+    user_score = state_data["score"]
 
-    if callback_data.answer_status == 1:
+    true_answer_index = game_data[question_index]['true_answer_index']
+
+    if true_answer_index == callback_data.question_index:
         user_score += 1
 
         await state.update_data(score=user_score)
 
-    if question_index < (len(questions) - 1):
+    if question_index < (len(game_data) - 1):
         question_index += 1
 
-        question = questions[question_index]
+        question = game_data[question_index]
 
         await state.update_data(question_index=question_index)
 
         # await callback.message.delete()
 
         await callback.message.edit_text(
-            text=question.text,
-            reply_markup=await create_question_kb(question.id))
+            text=question['question'],
+            reply_markup=create_question_kb(question_index))
 
         await callback.answer()
     else:
         state_data: dict[str, any] = await state.get_data()
 
-        promo = await memory_storage.get_data(bot=bot, key="promocode")
-
         await callback.message.delete()
 
-        await send_test_results(user_tg_id=callback.message.chat.id,
-                                user_score=state_data["score"],
-                                question_count=len(questions),
-                                promocode_id=promo["id"])
+        await send_game_results(chat_id=callback.message.chat.id, score=state_data["score"])
+
         await state.clear()
+
         await callback.answer()
+
+
+async def send_game_results(chat_id: int, score: int) -> None:
+    '''
+    Функция отправки сообщения с результатом игры
+    '''
+
+    question_count = len(game_data)
+
+    match define_type_game_result(calc_percent_true_answers(score, question_count)):
+        case 'pro':
+            message_text = (f"🎉 <b>Поздравляем, вы успешно прошил тест!</b> 🎉"
+                            f'Ваше звание: профессиональный гид.'
+                            f"\n\n<b>Ваш результат:</b> {score}/"
+                            f"{question_count}\n\n")
+
+            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+
+            photo = FSInputFile(path=photo_path)
+
+            await bot.send_photo(chat_id=chat_id,
+                                 photo=photo,
+                                 caption=message_text,
+                                 reply_markup=create_help_kb())
+        case 'middle':
+            message_text = (f"🎉 <b>Поздравляем, вы успешно прошли тест!</b> 🎉"
+                            f'Ваше звание: путешественник.'
+                            f"\n\n<b>Ваш результат:</b> {score}/"
+                            f"{question_count}\n\n")
+
+            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+
+            photo = FSInputFile(path=photo_path)
+
+            await bot.send_photo(chat_id=chat_id,
+                                 photo=photo,
+                                 caption=message_text,
+                                 reply_markup=create_help_kb())
+        case 'junior':
+            message_text = (f"🎉 <b>Поздравляем, вы успешно прошли тест!</b> 🎉"
+                            f'Ваше звание: зевака.'
+                            f"\n\n<b>Ваш результат:</b> {score}/"
+                            f"{question_count}\n\n")
+
+            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+
+            photo = FSInputFile(path=photo_path)
+
+            await bot.send_photo(chat_id=chat_id,
+                                 photo=photo,
+                                 caption=message_text,
+                                 reply_markup=create_help_kb())
