@@ -51,3 +51,52 @@ async def send_game_question_msg(callback: CallbackQuery, state: FSMContext) -> 
     )
 
     return None
+
+
+@router.callback_query(QuestionCallbackFactory.filter())
+async def process_question_answere(callback: CallbackQuery,
+                                   callback_data: QuestionCallbackFactory,
+                                   state: FSMContext) -> None:
+
+    '''
+    Функция обработки нажатия на кнопки с ответами на вопрос
+    '''
+
+    questions = await memory_storage.get_data(bot=bot, key="questions")
+    state_data: dict[str, any] = await state.get_data()
+
+    user_score = state_data["score"]
+    question_index = state_data["question_index"]
+
+    if callback_data.answer_status == 1:
+        user_score += 1
+
+        await state.update_data(score=user_score)
+
+    if question_index < (len(questions) - 1):
+        question_index += 1
+
+        question = questions[question_index]
+
+        await state.update_data(question_index=question_index)
+
+        # await callback.message.delete()
+
+        await callback.message.edit_text(
+            text=question.text,
+            reply_markup=await create_question_kb(question.id))
+
+        await callback.answer()
+    else:
+        state_data: dict[str, any] = await state.get_data()
+
+        promo = await memory_storage.get_data(bot=bot, key="promocode")
+
+        await callback.message.delete()
+
+        await send_test_results(user_tg_id=callback.message.chat.id,
+                                user_score=state_data["score"],
+                                question_count=len(questions),
+                                promocode_id=promo["id"])
+        await state.clear()
+        await callback.answer()

@@ -8,7 +8,7 @@ from loader import bot, config
 from keyboards.feedback import create_feedback_kb, create_grade_kb
 from keyboards.general import create_start_msg_kb
 from states.feedbackState import feedbackState
-from callback_factories.QuastionCallbackFactory import QuestionFeedbackCallbackFactory
+from callback_factories.QuestionFeedbackCallbackFactory import QuestionFeedbackCallbackFactory
 
 
 router: Router = Router(name='feedbackRouter')
