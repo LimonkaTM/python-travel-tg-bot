@@ -17,6 +17,8 @@ async def process_start_cmd(message: Message) -> None:
     Хендрел /start и /home комманд
     '''
 
+    await message.delete()
+
     photo_path = "./assets/img/travel_around_Arkhangelsk.jpg"
 
     photo = FSInputFile(path=photo_path)

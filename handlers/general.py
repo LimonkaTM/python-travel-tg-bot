@@ -1,6 +1,7 @@
 from aiogram import F
 from aiogram.dispatcher.router import Router
 from aiogram.types import CallbackQuery, FSInputFile
+from aiogram.fsm.context import FSMContext
 
 from loader import bot
 from keyboards.audio_gid import create_mian_audio_gid_msg_kb
@@ -52,5 +53,27 @@ async def send_audio_gid_msg(callback: CallbackQuery, ) -> None:
     await bot.send_photo(chat_id=callback.message.chat.id,
                          photo=photo,
                          reply_markup=create_mian_audio_gid_msg_kb())
+
+    return None
+
+
+@router.callback_query(F.data == "cancel_state")
+async def cancel_state(callback: CallbackQuery, state: FSMContext) -> None:
+
+    '''
+    Обработка нажатия на отмены стейта
+    '''
+
+    await callback.message.delete()
+
+    photo_path = "./assets/img/travel_around_Arkhangelsk.jpg"
+
+    photo = FSInputFile(path=photo_path)
+
+    await bot.send_photo(chat_id=callback.message.chat.id,
+                         photo=photo,
+                         reply_markup=create_start_msg_kb())
+    
+    await state.clear()
 
     return None
