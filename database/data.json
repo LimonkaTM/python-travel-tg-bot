@@ -24,21 +24,21 @@
     "game": [
         {
             "question": "Какой-то вопрос",
-            "answeres": [
+            "answers": [
                 "1",
                 "2",
                 "3"
             ],
-            "true_answere_index": 2
+            "true_answer_index": 2
         },
         {
             "question": "Что-то другое но не вопрос",
-            "answeres": [
+            "answers": [
                 "1",
                 "2",
                 "3"
             ],
-            "true_answere_index": 1
+            "true_answer_index": 1
         }
     ]
 }
