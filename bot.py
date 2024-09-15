@@ -4,7 +4,7 @@ import asyncio
 
 from loader import bot, dp
 
-from handlers import general, commands, attraction, audio_gid, about, help, feedback
+from handlers import general, commands, attraction, audio_gid, about, help, feedback, game
 from keyboards.menu import create_bot_menu
 
 
@@ -27,7 +27,8 @@ async def main() -> None:
     await bot.set_my_commands(create_bot_menu())
 
     dp.include_routers(general.router, commands.router, attraction.router,
-                       audio_gid.router, about.router, help.router, feedback.router)
+                       audio_gid.router, about.router, help.router,
+                       feedback.router, game.router)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
