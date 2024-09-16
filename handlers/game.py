@@ -23,7 +23,7 @@ async def send_start_game_msg(callback: CallbackQuery) -> None:
     '''
 
     photo = InputMediaPhoto(media=FSInputFile(path='assets/img/travel_around_Arkhangelsk.jpg'),
-                            caption='<b>Игра-тест</b>\n\nИгра представляет из себя ряд вопросов, на которые Вам предстоит ответить для проверки вашей внимательности.')
+                            caption='<b>Игра-викторина</b>\n\nИгра представляет из себя ряд вопросов, на которые Вам предстоит ответить для проверки вашей внимательности.')
 
     await bot.edit_message_media(chat_id=callback.message.chat.id,
                                  message_id=callback.message.message_id,
@@ -110,12 +110,12 @@ async def send_game_results(chat_id: int, score: int) -> None:
 
     match define_type_game_result(calc_percent_true_answers(score, question_count)):
         case 'pro':
-            message_text = (f"🎉 <b>Поздравляем, вы успешно прошил тест!</b> 🎉"
-                            f'Ваше звание: профессиональный гид.'
+            message_text = (f"🎉 <b>Поздравляем, вы отлично прошил тест!</b> 🎉"
+                            f'\n\n<b>Ваше звание:</b> профессиональный гид'
                             f"\n\n<b>Ваш результат:</b> {score}/"
                             f"{question_count}\n\n")
 
-            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+            photo_path = "assets/img/pro.jpg"
 
             photo = FSInputFile(path=photo_path)
 
@@ -124,12 +124,12 @@ async def send_game_results(chat_id: int, score: int) -> None:
                                  caption=message_text,
                                  reply_markup=create_help_kb())
         case 'middle':
-            message_text = (f"🎉 <b>Поздравляем, вы успешно прошли тест!</b> 🎉"
-                            f'Ваше звание: путешественник.'
+            message_text = (f"🎉 <b>Поздравляем, вы хорошо прошли тест!</b> 🎉"
+                            f'\n\n<b>Ваше звание:</b> путешественник'
                             f"\n\n<b>Ваш результат:</b> {score}/"
                             f"{question_count}\n\n")
 
-            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+            photo_path = "assets/img/middle.jpg"
 
             photo = FSInputFile(path=photo_path)
 
@@ -138,12 +138,12 @@ async def send_game_results(chat_id: int, score: int) -> None:
                                  caption=message_text,
                                  reply_markup=create_help_kb())
         case 'junior':
-            message_text = (f"🎉 <b>Поздравляем, вы успешно прошли тест!</b> 🎉"
-                            f'Ваше звание: зевака.'
+            message_text = (f"🎉 <b>Поздравляем, вы почти успешно прошли тест!</b> 🎉"
+                            f'\n\n<b>Ваше звание:</b> зевака'
                             f"\n\n<b>Ваш результат:</b> {score}/"
                             f"{question_count}\n\n")
 
-            photo_path = "assets/img/travel_around_Arkhangelsk.jpg"
+            photo_path = "assets/img/junior.jpg"
 
             photo = FSInputFile(path=photo_path)
 
