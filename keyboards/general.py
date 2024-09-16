@@ -20,13 +20,13 @@ def create_start_msg_kb() -> InlineKeyboardMarkup:
         text='🎧 Аудио-гид 🎧',
         callback_data='send_audio_gid_msg')
     keyboard_builder.button(
-        text='🎮 Викторина 🎮',
+        text='🎮 Игра-викторина 🎮',
         callback_data='send_game_msg')
     keyboard_builder.button(
         text='📝 Обратная связь 📝',
         callback_data='send_feedback_msg')
     keyboard_builder.button(
-        text='❓ Помощь ❓',
+        text='❔ Помощь ❔',
         callback_data='send_help_msg')
     keyboard_builder.button(
         text='✖ Закрыть ✖',

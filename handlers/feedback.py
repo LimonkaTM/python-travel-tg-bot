@@ -20,8 +20,8 @@ async def send_about_tour_msg(callback: CallbackQuery) -> None:
     Отправляет сообщение c предложением оставить отзыв
     '''
 
-    photo = InputMediaPhoto(media=FSInputFile(path='assets/img/travel_around_Arkhangelsk.jpg'),
-                            caption='<b>Оставить отзыв</b>\n\nПутешествинник, напиши отзыв о пройденном туре или о телеграм-боте. Что тебе понравилось? Что можно изменить? Что меньше всего понравилось? Обратная связь для нас очень важна, ведь мы прислушиваемся к предложениям и пожеланиям наших пользователей.')
+    photo = InputMediaPhoto(media=FSInputFile(path='assets/img/feedback.jpg'),
+                            caption='📝 <b>Обратная связь - путь к совершенствованию!</b> 📝\n\nПутешествинник, напиши отзыв о пройденном туре или о телеграм-боте. Что тебе понравилось? Что можно улучшить или изменить? Что меньше всего больше всего понравилось, а что меньше?\n\nОбратная связь для нас очень важна, ведь мы прислушиваемся к предложениям и пожеланиям наших пользователей.')
 
     await bot.edit_message_media(chat_id=callback.message.chat.id,
                                  message_id=callback.message.message_id,
@@ -41,7 +41,7 @@ async def send_feedback_tour(callback: CallbackQuery, state: FSMContext) -> None
 
     await state.set_state(feedbackState.grade_quality_tour)
 
-    await callback.message.answer(text='Поставьте оценку качевства путешествия:',
+    await callback.message.answer(text='Как бы вы оценили качество и проработанность тура?',
                                   reply_markup=create_grade_kb())
     await callback.answer()
 
@@ -58,7 +58,7 @@ async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionFeed
     await bot.edit_message_text(
         chat_id=callback.message.chat.id,
         message_id=callback.message.message_id,
-        text='Оцените удобство и работу с ботом:',
+        text='Как вам наш невероятный бот?',
         reply_markup=create_grade_kb()
     )
 
@@ -82,7 +82,7 @@ async def send_feedback_comment(callback: CallbackQuery, callback_data: Question
     await bot.edit_message_text(
         chat_id=callback.message.chat.id,
         message_id=callback.message.message_id,
-        text='Добавьте комментарий к вашему отзыву:'
+        text='Последний штрих. Добавьте коментарий:'
     )
 
     await state.set_state(feedbackState.comment)
