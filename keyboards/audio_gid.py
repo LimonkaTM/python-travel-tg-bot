@@ -65,8 +65,10 @@ def create_list_attraction_kb() -> InlineKeyboardMarkup:
     keyboard_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     for index, attraction in enumerate(attraction_data):
+        attraction_title = attraction['title'][5:-6]
+
         keyboard_builder.button(
-            text=attraction['title'],
+            text=attraction_title,
             callback_data=f'send_audio_gid_msg:{index}')
 
     keyboard_builder.button(
