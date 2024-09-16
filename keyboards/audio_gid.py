@@ -16,7 +16,7 @@ def create_mian_audio_gid_msg_kb() -> InlineKeyboardMarkup:
         text='🎧 Начать аудио-экскурсию 🎧',
         callback_data='start_audio_gid')
     keyboard_builder.button(
-        text='Список достопремечательностей',
+        text='📋 Список достопремечательностей 📋',
         callback_data='send_list_attraction_msg')
     keyboard_builder.button(
         text='Назад',

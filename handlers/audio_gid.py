@@ -63,7 +63,7 @@ async def send_list_attractions_msg(callback: CallbackQuery) -> None:
     Отправляет список достопримечательностей для открытия аудио
     '''
 
-    photo = InputMediaPhoto(media=FSInputFile('assets/img/travel_around_Arkhangelsk.jpg'),
+    photo = InputMediaPhoto(media=FSInputFile('assets/img/start_audio_gid.jpg'),
                             caption='<b>Выберите достопримечательность чтобы послушать аудио-гид:</b>')
 
     await bot.edit_message_media(chat_id=callback.message.chat.id,
