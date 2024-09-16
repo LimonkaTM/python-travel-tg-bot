@@ -7,7 +7,7 @@ from loader import bot, config
 
 from keyboards.feedback import create_feedback_kb, create_grade_kb
 from keyboards.general import create_start_msg_kb
-from states.feedbackState import feedbackState
+from states.FeedbackState import FeedbackState
 from callback_factories.QuestionFeedbackCallbackFactory import QuestionFeedbackCallbackFactory
 
 
@@ -39,14 +39,14 @@ async def send_feedback_tour(callback: CallbackQuery, state: FSMContext) -> None
 
     await callback.message.delete()
 
-    await state.set_state(feedbackState.grade_quality_tour)
+    await state.set_state(FeedbackState.grade_quality_tour)
 
     await callback.message.answer(text='Как бы вы оценили качество и проработанность тура?',
                                   reply_markup=create_grade_kb())
     await callback.answer()
 
 
-@router.callback_query(feedbackState.grade_quality_tour, QuestionFeedbackCallbackFactory.filter())
+@router.callback_query(FeedbackState.grade_quality_tour, QuestionFeedbackCallbackFactory.filter())
 async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionFeedbackCallbackFactory, state: FSMContext) -> None:
     '''
     Функция обработки нажатия на кнопки с ответами на вопрос о качестве тура
@@ -62,12 +62,12 @@ async def send_feedback_bot(callback: CallbackQuery, callback_data: QuestionFeed
         reply_markup=create_grade_kb()
     )
 
-    await state.set_state(feedbackState.grade_quality_bot)
+    await state.set_state(FeedbackState.grade_quality_bot)
 
     return None
 
 
-@router.callback_query(feedbackState.grade_quality_bot, QuestionFeedbackCallbackFactory.filter())
+@router.callback_query(FeedbackState.grade_quality_bot, QuestionFeedbackCallbackFactory.filter())
 async def send_feedback_comment(callback: CallbackQuery, callback_data: QuestionFeedbackCallbackFactory, state: FSMContext) -> None:
     '''
     Функция обработки нажатия на кнопки с ответами на вопрос работы с ботом
@@ -85,12 +85,12 @@ async def send_feedback_comment(callback: CallbackQuery, callback_data: Question
         text='Последний штрих. Добавьте коментарий:'
     )
 
-    await state.set_state(feedbackState.comment)
+    await state.set_state(FeedbackState.comment)
 
     return None
 
 
-@router.message(feedbackState.comment)
+@router.message(FeedbackState.comment)
 async def send_result_comment(message: Message, state: FSMContext) -> None:
     '''
     Функция обработки нажатия на кнопку с отправкой комментария

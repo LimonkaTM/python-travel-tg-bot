@@ -4,7 +4,7 @@ from aiogram.types import CallbackQuery, InputMediaPhoto, FSInputFile
 from aiogram.fsm.context import FSMContext
 
 from callback_factories.QuestionGameCallbackFactory import QuestionGameCallbackFactory
-from states.game_state import gameState
+from states.Game_state import GameState
 
 from loader import bot, game_data
 
@@ -41,7 +41,7 @@ async def send_game_question_msg(callback: CallbackQuery, state: FSMContext) -> 
 
     await callback.message.delete()
 
-    await state.set_state(gameState.question_index)
+    await state.set_state(GameState.question_index)
     await state.update_data(question_index=0)
     await state.update_data(score=0)
 
@@ -56,7 +56,7 @@ async def send_game_question_msg(callback: CallbackQuery, state: FSMContext) -> 
     return None
 
 
-@router.callback_query(gameState.question_index, QuestionGameCallbackFactory.filter())
+@router.callback_query(GameState.question_index, QuestionGameCallbackFactory.filter())
 async def process_question_answere(callback: CallbackQuery,
                                    callback_data: QuestionGameCallbackFactory,
                                    state: FSMContext) -> None:
