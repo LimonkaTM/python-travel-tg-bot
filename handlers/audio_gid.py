@@ -47,7 +47,7 @@ async def process_carousel_btns(callback: CallbackQuery) -> None:
         return await callback.answer('')
 
     new_audio = InputMediaAudio(media=FSInputFile(attraction_data[new_attraction_index]['audio_path']),
-                                caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["description"]}')
+                                caption=f'<b>{attraction_data[new_attraction_index]["title"]}</b>\n\n{attraction_data[new_attraction_index]["audio_gid_description"]}')
 
     await bot.edit_message_media(chat_id=callback.message.chat.id,
                                  message_id=callback.message.message_id,
@@ -95,7 +95,7 @@ async def send_audio_gid_msg(callback: CallbackQuery) -> None:
 
     await bot.send_audio(chat_id=callback.message.chat.id,
                          audio=audio,
-                         caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["description"]}',
+                         caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["audio_gid_description"]}',
                          reply_markup=create_attraction_audio_gid_kb(current_attraction_index))
 
     return None
