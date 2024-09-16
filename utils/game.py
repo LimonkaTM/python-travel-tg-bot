@@ -28,7 +28,7 @@ def define_type_game_result(score_persent: str) -> str:
 
     if score_persent >= 80:
         return 'pro'
-    elif score_persent > 50 & score_persent < 80:
+    elif score_persent > 50:
         return 'middle'
     else:
         return 'junior'
