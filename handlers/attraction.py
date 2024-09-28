@@ -71,8 +71,17 @@ async def process_switch_attraction(callback: CallbackQuery) -> None:
     new_attraction_index = (current_attraction_index + 1)
 
     if new_attraction_index == len(attraction_data):
-        await callback.answer('')
-        return None
+
+        new_photo = InputMediaPhoto(
+            media=FSInputFile(attraction_data[0]['photo_paths'][0]),
+            caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["description"]}')
+
+        return await bot.edit_message_media(
+            chat_id=callback.message.chat.id,
+            message_id=callback.message.message_id,
+            media=new_photo,
+            reply_markup=photo_navigation_kb(0, 0)
+        )
 
     all_photo_paths = attraction_data[new_attraction_index]['photo_paths']
 
