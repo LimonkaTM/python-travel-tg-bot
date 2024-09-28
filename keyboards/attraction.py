@@ -29,7 +29,7 @@ def photo_navigation_kb(currnet_attraction_index: int, current_photo_index: int)
 
     keyboard_builder.row(
         InlineKeyboardButton(text='На главную',
-                             callback_data='send_main_msg'
+                             callback_data='send_back_msg:main'
                              )
     )
 

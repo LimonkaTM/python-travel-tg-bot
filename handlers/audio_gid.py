@@ -16,19 +16,18 @@ async def process_start_cmd(callback: CallbackQuery) -> None:
     Хендрел нажатия на кнопку начала уадио-экскурсии
     '''
 
-    print(attraction_data[0]['audio_path'])
+    new_audio = InputMediaAudio(
+        media=FSInputFile(attraction_data[0]['audio_path']),
+        caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["audio_gid_description"]}'
+    )
 
-    await bot.delete_message(chat_id=callback.message.chat.id,
-                             message_id=callback.message.message_id)
+    return await bot.edit_message_media(
+        chat_id=callback.message.chat.id,
+        message_id=callback.message.message_id,
+        media=new_audio,
+        reply_markup=create_attraction_audio_gid_kb(0)
+    )
 
-    audio = FSInputFile(path=attraction_data[0]['audio_path'])
-
-    await bot.send_audio(chat_id=callback.message.chat.id,
-                         audio=audio,
-                         caption=f'<b>{attraction_data[0]["title"]}</b>\n\n{attraction_data[0]["audio_gid_description"]}',
-                         reply_markup=create_attraction_audio_gid_kb(0))
-
-    return None
 
 
 @router.callback_query(F.data.startswith('prev_audio_gid_attraction') | F.data.startswith('next_audio_gid_attraction'))
@@ -81,21 +80,10 @@ async def send_audio_gid_msg(callback: CallbackQuery) -> None:
     '''
     current_attraction_index = int(callback.data.split(':')[1])
 
-    # if 'prev' in callback.data:
-    #     new_attraction_index = (current_attraction_index - 1) % len(attraction_data)
-    # else:
-    #     new_attraction_index = (current_attraction_index + 1) % len(attraction_data)
+    new_audio = InputMediaAudio(media=FSInputFile(attraction_data[current_attraction_index]['audio_path']),
+                                caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["audio_gid_description"]}')
 
-    # if new_attraction_index == current_attraction_index:
-    #     return await callback.answer('')
-
-    await callback.message.delete()
-
-    audio = FSInputFile(attraction_data[current_attraction_index]['audio_path'])
-
-    await bot.send_audio(chat_id=callback.message.chat.id,
-                         audio=audio,
-                         caption=f'<b>{attraction_data[current_attraction_index]["title"]}</b>\n\n{attraction_data[current_attraction_index]["audio_gid_description"]}',
-                         reply_markup=create_attraction_audio_gid_kb(current_attraction_index))
-
-    return None
+    return await bot.edit_message_media(chat_id=callback.message.chat.id,
+                                 message_id=callback.message.message_id,
+                                 media=new_audio,
+                                 reply_markup=create_attraction_audio_gid_kb(current_attraction_index))

@@ -20,7 +20,7 @@ def create_mian_audio_gid_msg_kb() -> InlineKeyboardMarkup:
         callback_data='send_list_attraction_msg')
     keyboard_builder.button(
         text='Назад',
-        callback_data='send_main_msg')
+        callback_data='send_back_msg:main')
 
     keyboard_builder.adjust(1)
 
@@ -50,7 +50,7 @@ def create_attraction_audio_gid_kb(currnet_audio_gid_index: int) -> InlineKeyboa
     keyboard_builder.row(
         InlineKeyboardButton(
             text='Вернутся',
-            callback_data='send_audio_gid_msg'
+            callback_data='send_back_msg:audio_gid'
         )
     )
 
@@ -73,7 +73,7 @@ def create_list_attraction_kb() -> InlineKeyboardMarkup:
 
     keyboard_builder.button(
         text='Назад',
-        callback_data='send_audio_gid_msg')
+        callback_data='send_back_msg:audio_gid')
 
     keyboard_builder.adjust(1)
 

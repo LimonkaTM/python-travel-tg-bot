@@ -11,7 +11,7 @@ def create_about_kb() -> InlineKeyboardMarkup:
 
     keyboard_builder.button(
         text='Назад',
-        callback_data='send_main_msg')
+        callback_data='send_back_msg:main')
 
     keyboard_builder.adjust(1)
 
